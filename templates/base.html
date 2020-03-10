@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}"> -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='w3.css') }}">
+    <title>RandGuess</title>
+<!--  # url_for has two forms:
+      # 1.url_for('view_name')
+      # 2.url_for('directory_name_relative_to_app.py', filename='base.html') -->
+    <link rel="icon" href="{{ url_for('static', filename='RandGuess.png') }}">
+</head>
+<body>
+{% block content %}
+{% endblock %}
+</body>
+</html>

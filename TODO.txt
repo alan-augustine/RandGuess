@@ -1,0 +1,13 @@
+Modal:
+https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal
+
+Login form:
+https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_login_form_modal
+
+Button:
+https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_buttons_animate3
+
+When virtual env was created, pip was installed. It was installed by:
+source venv/bin/activate
+python -m pip install --upgrade pip
+(initially, pip was pointing to system pip /usr/local/bin/pip, not the one inside virtualenv)

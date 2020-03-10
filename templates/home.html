@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="w3-center w3-blue">NUMBER GUESSING GAME</h1>
+<div class="w3-card-4 w3-container w3-display-middle w3-hover-shadow w3-dark-grey w3-padding-48">
+    <header class="w3-container w3-blue">
+  <h1>Enter Your Guess</h1>
+</header>
+    <br>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        {{ form.user_guess.label }} {{ form.user_guess(style='max-width:50px') }}
+        <br><br>
+        {{ form.submit(class="w3-button w3-deep-orange w3-round-large") }}
+        <br>
+        {{ form.num_range_select.label }} {{ form.num_range_select(min='1', max='10') }}
+        {{ form.num_range_text(style='max-width:30px') }}
+    </form>
+</div>
+
+  <div id="status_modal" class="w3-modal">
+    <div class="w3-modal-content">
+        {% if guess_result == 'SUCCESS' %}
+          {% set modal_bg_color = 'w3-green' %}
+        {% else %}
+          {% set modal_bg_color = 'w3-red' %}
+        {% endif %}
+      <header class="w3-container {{modal_bg_color}}">
+        <span id="status_modal_close"
+        class=" w3-button w3-display-topright">&times;</span>
+      </header>
+      <div class="w3-container {{modal_bg_color}}">
+        <h1 class="w3-center"> {{ guess_result }} </h1>
+      </div>
+    </div>
+  </div>
+    <script>
+    {# no need to use: var num_range_select = document.getElementById("{{ form.num_range_select.id }}") #}
+    var num_range_select = document.getElementById("num_range_select")
+    var num_range_text = document.getElementById("num_range_text")
+    var status_modal = document.getElementById('status_modal');
+    var status_modal_close = document.getElementById('status_modal_close');
+
+    {# initial value #}
+    num_range_text.value = '5';
+
+
+    {# dynamically change value, as user slides the range-slider #}
+    {# Ref: https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_oninput #}
+    num_range_select.addEventListener("input", update_num_range_text);
+
+      function update_num_range_text(){
+      num_range_text.value = num_range_select.value;
+      }
+
+      if ( '{{ guess_result }}' != 'NIL') {
+      status_modal.style.display='block'
+      }
+      {# modal close button #}
+      status_modal_close.addEventListener("click", function() {status_modal.style.display='none';});
+
+    </script>
+
+{% endblock %}
