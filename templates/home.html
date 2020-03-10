@@ -30,6 +30,11 @@
       </header>
       <div class="w3-container {{modal_bg_color}}">
         <h1 class="w3-center"> {{ guess_result }} </h1>
+          {% if guess_result == 'SUCCESS' %}
+              <p class="w3-center"> You Guessed It Correct!</p>
+          {% else %}
+              <p class="w3-center">Correct Number = {{ system_guess }} </p>
+          {% endif %}
       </div>
     </div>
   </div>
