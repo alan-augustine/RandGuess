@@ -10,20 +10,23 @@
         {{ form.hidden_tag() }}
         {{ form.user_guess.label }} {{ form.user_guess(style='max-width:50px') }}
         <br><br>
-        {{ form.submit(class="w3-button w3-deep-orange w3-round-large") }}
+        {{ form.submit(class="w3-button w3-yellow w3-round-large") }}
         <br>
         {{ form.num_range_select.label }} {{ form.num_range_select(min='1', max='10') }}
         {{ form.num_range_text(style='max-width:30px') }}
     </form>
 </div>
 
-  <div id="status_modal" class="w3-modal">
-    <div class="w3-modal-content">
-        {% if guess_result == 'SUCCESS' %}
+  <!-- modal to show result -->
+  <div id="status_modal" class="w3-modal" style="border:16px solid black">
+      {% if guess_result == 'SUCCESS' %}
           {% set modal_bg_color = 'w3-green' %}
-        {% else %}
+          {% set modal_border_color = 'green' %}
+      {% else %}
           {% set modal_bg_color = 'w3-red' %}
-        {% endif %}
+          {% set modal_border_color = 'red' %}
+      {% endif %}
+    <div class="w3-modal-content" style="border:16px solid {{ modal_border_color }}">
       <header class="w3-container {{modal_bg_color}}">
         <span id="status_modal_close"
         class=" w3-button w3-display-topright">&times;</span>
@@ -32,12 +35,16 @@
         <h1 class="w3-center"> {{ guess_result }} </h1>
           {% if guess_result == 'SUCCESS' %}
               <p class="w3-center"> You Guessed It Correct!</p>
+              <br>
           {% else %}
               <p class="w3-center">Correct Number = {{ system_guess }} </p>
+              <br>
           {% endif %}
       </div>
     </div>
   </div>
+  <!-- end of modal to show result -->
+
     <script>
     {# no need to use: var num_range_select = document.getElementById("{{ form.num_range_select.id }}") #}
     var num_range_select = document.getElementById("num_range_select")
@@ -45,7 +52,7 @@
     var status_modal = document.getElementById('status_modal');
     var status_modal_close = document.getElementById('status_modal_close');
 
-    {# initial value #}
+    {# initial value of range slider #}
     num_range_text.value = '5';
 
 
@@ -53,13 +60,14 @@
     {# Ref: https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_oninput #}
     num_range_select.addEventListener("input", update_num_range_text);
 
-      function update_num_range_text(){
+      function update_num_range_text() {
       num_range_text.value = num_range_select.value;
       }
 
       if ( '{{ guess_result }}' != 'NIL') {
       status_modal.style.display='block'
       }
+
       {# modal close button #}
       status_modal_close.addEventListener("click", function() {status_modal.style.display='none';});
 

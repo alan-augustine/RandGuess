@@ -7,14 +7,14 @@ from random import randrange
 
 ########################
 app = Flask(__name__)
-app.secret_key = "my_default_secret_key"
+app.secret_key = "my_default_nonsecure_secret_key"
 ########################
 
 
 class RandomNumberForm(FlaskForm):
     # DataRequired validator was not working properly
     user_guess = IntegerField("Your Guess", validators=[InputRequired()])
-    # range max and min is handled in template file
+    # range max and min values are handled in template file
     num_range_select = IntegerRangeField("Number Range: ")
     num_range_text = StringField()
     submit = SubmitField("Submit")
@@ -40,7 +40,7 @@ def index():
             guess_result = 'FAIL'
         return render_template('home.html', form=form, guess_result=guess_result, system_guess=system_guess)
     # render_template , by default looks for template files in
-    # 'templates' directory relative to app.py (or file where blueprint is defined ?)
+    # 'templates' directory relative to app.py (or relative to file where blueprint is defined ?)
     return render_template('home.html', form=form, guess_result=guess_result, system_guess=system_guess)
 
 
