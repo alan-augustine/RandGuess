@@ -45,6 +45,8 @@
   </div>
   <!-- end of modal to show result -->
 
+<p id="attempt_count" class="w3-display-right"></p>
+
     <script>
     {# no need to use: var num_range_select = document.getElementById("{{ form.num_range_select.id }}") #}
     var num_range_select = document.getElementById("num_range_select")
@@ -55,7 +57,6 @@
     {# initial value of range slider #}
     num_range_text.value = '5';
 
-
     {# dynamically change value, as user slides the range-slider #}
     {# Ref: https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_oninput #}
     num_range_select.addEventListener("input", update_num_range_text);
@@ -64,8 +65,22 @@
       num_range_text.value = num_range_select.value;
       }
 
+      function update_attempt_count() {
+          var attempt_count = document.getElementById('attempt_count');
+          if(sessionStorage.attempt_count){
+              sessionStorage.attempt_count = Number(sessionStorage.attempt_count) + 1 ;
+              sessionStorage.attempt_count_html = sessionStorage.attempt_count_html + sessionStorage.attempt_count + '<br>';
+          }
+          else {
+              sessionStorage.attempt_count = 1;
+              sessionStorage.attempt_count_html = '1' + '<br>';
+          }
+      attempt_count.innerHTML = attempt_count.innerHTML + sessionStorage.attempt_count_html;
+      }
+
       if ( '{{ guess_result }}' != 'NIL') {
       status_modal.style.display='block'
+      update_attempt_count()
       }
 
       {# modal close button #}
