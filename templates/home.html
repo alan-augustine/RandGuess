@@ -15,12 +15,12 @@
     <br>
     <form method="POST">
         {{ form.hidden_tag() }}
-        {{ form.user_guess.label }} {{ form.user_guess(style='max-width:50px') }}
+        {{ form.user_guess.label }} {{ form.user_guess(class="w3-round-large", style='max-width:50px') }}
         <br><br>
         {{ form.submit(class="w3-button w3-yellow w3-round-large") }}
         <br>
-        {{ form.num_range_select.label }} {{ form.num_range_select(min='1', max='10') }}
-        {{ form.num_range_text(style='max-width:30px') }}
+        {{ form.num_range_select.label }} {{ form.num_range_select(class="", min='1', max='10') }}
+        {{ form.num_range_text(class="w3-round-large", style='max-width:40px') }}
     </form>
 </div>
 
