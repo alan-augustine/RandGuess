@@ -51,8 +51,9 @@
     </div>
   </div>
   <!-- end of modal to show result -->
-
-<p id="attempt_count" class="w3-display-right"></p>
+<div class="w3-panel w3-container" style="max-height:50px;overflow:scroll;">
+  <p id="attempt_count" class="w3-display-right"></p>
+</div>
 
     <script>
     {# no need to use: var num_range_select = document.getElementById("{{ form.num_range_select.id }}") #}
@@ -73,22 +74,31 @@
       }
 
       {# Ref: https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_win_sessionstorage2 #}
-      function update_attempt_count() {
+      function update_attempt_count(result) {
           var attempt_count = document.getElementById('attempt_count');
+          if(result == 'SUCCESS' ) {
+              attempt_hist_color = 'w3-green';
+              attempt_hist_status = 'SUCCESS';
+          }
+          else {
+            attempt_hist_color = 'w3-red';
+            attempt_hist_status = 'FAIL';
+          }
+
           if(sessionStorage.attempt_count){
               sessionStorage.attempt_count = Number(sessionStorage.attempt_count) + 1 ;
-              sessionStorage.attempt_count_html = sessionStorage.attempt_count + '<br>' + sessionStorage.attempt_count_html;
+              sessionStorage.attempt_count_html = '<p class="w3-panel ' +  attempt_hist_color + '" style="max-width:150px">' + sessionStorage.attempt_count +'.' + attempt_hist_status +'</p>' + sessionStorage.attempt_count_html;
           }
           else {
               sessionStorage.attempt_count = 1;
-              sessionStorage.attempt_count_html = '1';
+              sessionStorage.attempt_count_html = '<p class="w3-panel ' +  attempt_hist_color + '" style="max-width:150px">1.' + attempt_hist_status +'</p>';
           }
       attempt_count.innerHTML = attempt_count.innerHTML + sessionStorage.attempt_count_html;
       }
 
       if ( '{{ guess_result }}' != 'NIL') {
       status_modal.style.display='block'
-      update_attempt_count()
+      update_attempt_count('{{ guess_result }}')
       }
 
       {# modal close button #}
