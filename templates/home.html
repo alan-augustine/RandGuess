@@ -1,10 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
-<h1 class="w3-center w3-blue">NUMBER GUESSING GAME</h1>
-<div class="w3-card-4 w3-container w3-display-middle w3-hover-shadow w3-dark-grey w3-padding-48">
-    <header class="w3-container w3-blue">
-  <h1>Enter Your Guess</h1>
-</header>
+<div class="w3-container w3-orange w3-round">
+    <p> </p>
+</div>
+<div class="w3-container w3-center w3-card-4 w3-dark-grey w3-round-xxlarge">
+    <h1> <font color="yellow" class="w3-xxxlarge w3-wide"> RAND-GUESS </font> </h1>
+    <p>Guess the Random Number!</p>
+</div>
+
+<div class="w3-card-4 w3-container w3-display-middle w3-hover-shadow w3-dark-grey w3-padding-48 w3-round-xxlarge">
+    <header class="w3-container">
+        <h1><font color="yellow" class="w3-xxlarge w3-wide"> Enter Your Guess</font></font></h1>
+    </header>
     <br>
     <form method="POST">
         {{ form.hidden_tag() }}
@@ -18,7 +25,7 @@
 </div>
 
   <!-- modal to show result -->
-  <div id="status_modal" class="w3-modal" style="border:16px solid black">
+  <div id="status_modal" class="w3-modal" style="border:16px solid grey">
       {% if guess_result == 'SUCCESS' %}
           {% set modal_bg_color = 'w3-green' %}
           {% set modal_border_color = 'green' %}
@@ -70,11 +77,11 @@
           var attempt_count = document.getElementById('attempt_count');
           if(sessionStorage.attempt_count){
               sessionStorage.attempt_count = Number(sessionStorage.attempt_count) + 1 ;
-              sessionStorage.attempt_count_html = sessionStorage.attempt_count_html + sessionStorage.attempt_count + '<br>';
+              sessionStorage.attempt_count_html = sessionStorage.attempt_count + '<br>' + sessionStorage.attempt_count_html;
           }
           else {
               sessionStorage.attempt_count = 1;
-              sessionStorage.attempt_count_html = '1' + '<br>';
+              sessionStorage.attempt_count_html = '1';
           }
       attempt_count.innerHTML = attempt_count.innerHTML + sessionStorage.attempt_count_html;
       }
