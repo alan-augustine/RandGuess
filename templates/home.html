@@ -51,9 +51,12 @@
     </div>
   </div>
   <!-- end of modal to show result -->
-<div class="w3-panel w3-container" style="max-height:50px;overflow:scroll;">
-  <p id="attempt_count" class="w3-display-right"></p>
+
+
+<div class="w3-display-right w3-dark-grey w3-round-large" style="overflow:scroll;padding-right: 10px ;padding-left: 10px;padding-right: 5px;max-height:200px;max-width:200px;min-width:120px;border-spacing:10px">
+  <div id="attempt_count"></div>
 </div>
+
 
     <script>
     {# no need to use: var num_range_select = document.getElementById("{{ form.num_range_select.id }}") #}
@@ -87,11 +90,11 @@
 
           if(sessionStorage.attempt_count){
               sessionStorage.attempt_count = Number(sessionStorage.attempt_count) + 1 ;
-              sessionStorage.attempt_count_html = '<p class="w3-panel ' +  attempt_hist_color + '" style="max-width:150px">' + sessionStorage.attempt_count +'.' + attempt_hist_status +'</p>' + sessionStorage.attempt_count_html;
+              sessionStorage.attempt_count_html = '<p class="w3-round ' +  attempt_hist_color + '" style="max-width:170px">' + sessionStorage.attempt_count +'.' + attempt_hist_status +'</p>' + sessionStorage.attempt_count_html;
           }
           else {
               sessionStorage.attempt_count = 1;
-              sessionStorage.attempt_count_html = '<p class="w3-panel ' +  attempt_hist_color + '" style="max-width:150px">1.' + attempt_hist_status +'</p>';
+              sessionStorage.attempt_count_html = '<p class="w3-round ' +  attempt_hist_color + '" style="max-width:170px">1.' + attempt_hist_status +'</p>';
           }
       attempt_count.innerHTML = attempt_count.innerHTML + sessionStorage.attempt_count_html;
       }
