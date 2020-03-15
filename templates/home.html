@@ -1,39 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
 
-<style>
-.circle {
-  height: 120px;
-  width: 120px;
-  background-color: #bbb;
-  border-radius: 50%;
-  display: inline-block;
-  text-align: center;
-  font-weight: bold;
-}
-</style>
-
-<div class="w3-container w3-orange w3-round">
-    <p> </p>
-</div>
+{# Title #}
 <div class="w3-container w3-center w3-card-4 w3-brown w3-round-xxlarge w3-dark-grey">
     <h1> <font color="yellow" class="w3-xxxlarge w3-wide"> <b>RAND-GUESS</b> </font> </h1>
     <p>Guess the Random Number!</p>
 </div>
 
-<!--
-<div class="circle w3-display-left w3-yellow" style="margin-left:95px;height:130px;width:130px;">
-</div>
--->
-
+{# Points Display #}
 <div class="w3-container w3-center w3-display-left w3-dark-grey w3-border w3-border-yellow w3-round-large" style="margin-left:100px;">
-    <p><b>Current Points</b></p>
+    <p><b>POINTS</b></p>
     <h1 id="current_points"></h1>
 </div>
 <br>
 
-
-
+{# Main Form #}
 <div class="w3-card-4 w3-container w3-display-middle w3-hover-shadow w3-padding-48 w3-round-xxlarge w3-dark-grey" style="margin-bottom:10px;">
     <header class="w3-container">
         <h1><font color="yellow" class="w3-xxlarge"> Enter Your Guess</font></font></h1>
@@ -56,8 +37,9 @@
     </div>
 </div>
 
-  <!-- modal to show result -->
-  <div id="status_modal" class="w3-modal" style="border:16px solid grey">
+
+{# modal to show result #}
+<div id="status_modal" class="w3-modal" style="border:16px solid grey">
       {% if guess_result == 'SUCCESS' %}
           {% set modal_bg_color = 'w3-green' %}
           {% set modal_border_color = 'green' %}
@@ -81,17 +63,17 @@
           {% endif %}
       </div>
     </div>
-  </div>
-  <!-- end of modal to show result -->
+</div>
+{# end of modal to show result #}}
 
-
+{# Attempt History #}}
 <div class="w3-display-right w3-dark-grey w3-round-large w3-border" style="overflow:scroll;padding-left: 10px;padding-right: 5px;max-height:200px;max-width:200px;min-width:120px;margin-right:50px;">
     <p class="w3-center"><b>HISTORY</b></p>
   <div id="attempt_count"></div>
 </div>
 
-
-    <script>
+{# JAVA-SCRIPT #}
+<script>
     {# no need to use: var num_range_select = document.getElementById("{{ form.num_range_select.id }}") #}
     var num_range_select = document.getElementById("num_range_select")
     var num_range_text = document.getElementById("num_range_text")
@@ -101,8 +83,16 @@
     var status_modal = document.getElementById('status_modal');
     var status_modal_close = document.getElementById('status_modal_close');
 
-    {# initial value of range slider #}
-    num_range_text.value = '5';
+    //{# initial value of range slider #}
+    //num_range_text.value = '5';
+
+    if(sessionStorage.num_range_text){
+        num_range_text.value = sessionStorage.num_range_text;
+    }
+    else {
+        sessionStorage.num_range_text = '5';
+        num_range_text.value = sessionStorage.num_range_text;
+    }
 
     {# initial points for correct and wrong guess#}
    positive_points.innerHTML = Number(num_range_text.value);
@@ -119,6 +109,7 @@
 
       positive_points.innerHTML = Number(num_range_text.value);
       negative_points.innerHTML = parseInt(Number(num_range_text.value)/5);
+      sessionStorage.num_range_text = num_range_text.value;
 
       }
 
@@ -146,7 +137,8 @@
           else {
               sessionStorage.attempt_count = 1;
               sessionStorage.attempt_count_html = '<p class="w3-round ' +  attempt_hist_color + '" style="max-width:170px">1.' + attempt_hist_status +'</p>';
-              sessionStorage.current_points = 0;
+              sessionStorage.current_points = point_change_for_this_attempt;
+              current_points_text.innerHTML = Number(sessionStorage.current_points)
           }
       attempt_count.innerHTML = attempt_count.innerHTML + sessionStorage.attempt_count_html;
       }
@@ -159,6 +151,6 @@
       {# modal close button #}
       status_modal_close.addEventListener("click", function() {status_modal.style.display='none';});
 
-    </script>
+</script>
 
 {% endblock %}
