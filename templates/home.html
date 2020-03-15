@@ -1,5 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
+
+<style>
+.circle {
+  height: 120px;
+  width: 120px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  text-align: center;
+  font-weight: bold;
+}
+</style>
+
 <div class="w3-container w3-orange w3-round">
     <p> </p>
 </div>
@@ -8,11 +21,23 @@
     <p>Guess the Random Number!</p>
 </div>
 
-<div class="w3-card-4 w3-container w3-display-middle w3-hover-shadow w3-padding-48 w3-round-xxlarge w3-dark-grey">
+<!--
+<div class="circle w3-display-left w3-yellow" style="margin-left:95px;height:130px;width:130px;">
+</div>
+-->
+
+<div class="w3-container w3-center w3-display-left w3-dark-grey w3-border w3-border-yellow w3-round-large" style="margin-left:100px;">
+    <p><b>Current Points</b></p>
+    <h1 id="current_points"></h1>
+</div>
+<br>
+
+
+
+<div class="w3-card-4 w3-container w3-display-middle w3-hover-shadow w3-padding-48 w3-round-xxlarge w3-dark-grey" style="margin-bottom:10px;">
     <header class="w3-container">
-        <h1><font color="yellow" class="w3-xxlarge w3-wide"> Enter Your Guess</font></font></h1>
+        <h1><font color="yellow" class="w3-xxlarge"> Enter Your Guess</font></font></h1>
     </header>
-    <br>
     <form method="POST">
         {{ form.hidden_tag() }}
         {{ form.user_guess.label }} {{ form.user_guess(class="w3-round-large", style='max-width:50px') }}
@@ -22,6 +47,13 @@
         {{ form.num_range_select.label }} {{ form.num_range_select(class="", min='1', max='10') }}
         {{ form.num_range_text(class="w3-round-large", style='max-width:40px') }}
     </form>
+    <div>
+        <p id="positive_points" class="w3-green w3-center w3-round-large w3-border" style="max-width:100px;margin-left:10px;"></p>
+    </div>
+
+    <div>
+        <p id="negative_points" class="w3-red w3-center w3-round-large w3-border" style="max-width:100px;margin-left:10px;">4555</p>
+    </div>
 </div>
 
   <!-- modal to show result -->
@@ -53,8 +85,8 @@
   <!-- end of modal to show result -->
 
 
-<div class="w3-display-right w3-dark-grey w3-round-large" style="overflow:scroll;padding-right: 10px ;padding-left: 10px;padding-right: 5px;max-height:200px;max-width:200px;min-width:120px;border-spacing:10px">
-    <p><b>HISTORY</b></p>
+<div class="w3-display-right w3-dark-grey w3-round-large w3-border" style="overflow:scroll;padding-left: 10px;padding-right: 5px;max-height:200px;max-width:200px;min-width:120px;margin-right:50px;">
+    <p class="w3-center"><b>HISTORY</b></p>
   <div id="attempt_count"></div>
 </div>
 
@@ -63,18 +95,31 @@
     {# no need to use: var num_range_select = document.getElementById("{{ form.num_range_select.id }}") #}
     var num_range_select = document.getElementById("num_range_select")
     var num_range_text = document.getElementById("num_range_text")
+    var positive_points_text = document.getElementById("positive_points")
+    var negative_points_text = document.getElementById("negative_points")
+    var current_points_text = document.getElementById("current_points")
     var status_modal = document.getElementById('status_modal');
     var status_modal_close = document.getElementById('status_modal_close');
 
     {# initial value of range slider #}
     num_range_text.value = '5';
 
+    {# initial points for correct and wrong guess#}
+   positive_points.innerHTML = Number(num_range_text.value);
+   negative_points.innerHTML = parseInt(Number(num_range_text.value)/5);
+   current_points_text.innerHTML = 0;
+
     {# dynamically change value, as user slides the range-slider #}
     {# Ref: https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_oninput #}
     num_range_select.addEventListener("input", update_num_range_text);
 
       function update_num_range_text() {
+      {# content of text filed = value of from range selector input #}
       num_range_text.value = num_range_select.value;
+
+      positive_points.innerHTML = Number(num_range_text.value);
+      negative_points.innerHTML = parseInt(Number(num_range_text.value)/5);
+
       }
 
       {# Ref: https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_win_sessionstorage2 #}
@@ -83,19 +128,25 @@
           if(result == 'SUCCESS' ) {
               attempt_hist_color = 'w3-green';
               attempt_hist_status = 'SUCCESS';
+              point_change_for_this_attempt = Number(positive_points.innerHTML);
           }
           else {
             attempt_hist_color = 'w3-red';
             attempt_hist_status = 'FAIL';
+            point_change_for_this_attempt = Number(negative_points.innerHTML) * -1 ;
           }
 
           if(sessionStorage.attempt_count){
               sessionStorage.attempt_count = Number(sessionStorage.attempt_count) + 1 ;
               sessionStorage.attempt_count_html = '<p class="w3-round ' +  attempt_hist_color + '" style="max-width:170px">' + sessionStorage.attempt_count +'.' + attempt_hist_status +'</p>' + sessionStorage.attempt_count_html;
+              sessionStorage.current_points = Number(sessionStorage.current_points) + point_change_for_this_attempt;
+              current_points_text.innerHTML = Number(sessionStorage.current_points);
           }
+          {# if first attempt, set/store initial values#}
           else {
               sessionStorage.attempt_count = 1;
               sessionStorage.attempt_count_html = '<p class="w3-round ' +  attempt_hist_color + '" style="max-width:170px">1.' + attempt_hist_status +'</p>';
+              sessionStorage.current_points = 0;
           }
       attempt_count.innerHTML = attempt_count.innerHTML + sessionStorage.attempt_count_html;
       }
