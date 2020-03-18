@@ -5,9 +5,9 @@ A simple web based number guessing game using:
 * [W3.CSS](https://www.w3schools.com/w3css/)
 * Javascript
 
-User need to correctly guess the number between 3 and 25.
+Player need to correctly guess the number between 3 and 25.
 <br>
-User can adjust the number range and points for correct guess and negative points for incorrect guess changes accordingly.
+Player can adjust the number range and points for correct guess and negative points for incorrect guess changes accordingly.
 <br>
 ![](RandGuess.gif)
 
