@@ -15,6 +15,6 @@ User can adjust the number range and points for correct guess and negative point
 
 Python Flask is used mainly to generate ramdom number and to verify user guess.
 <br>
-Remaining features like points and attempt history is computed at client side via Javascript.
+Remaining features like points and attempt history are computed at client side via Javascript.
 <br>
 So, the points and attempt history are maintained per user session.

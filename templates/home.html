@@ -80,7 +80,7 @@
 
 {# JAVA-SCRIPT #}
 <script>
-    {# no need to use: var num_range_select = document.getElementById("{{ form.num_range_select.id }}") #}
+    //no need to use: var num_range_select = document.getElementById("{{ form.num_range_select.id }}")
     var num_range_select = document.getElementById("num_range_select")
     var num_range_text = document.getElementById("num_range_text")
     var positive_points_text = document.getElementById("positive_points")
@@ -89,9 +89,10 @@
     var status_modal = document.getElementById('status_modal');
     var status_modal_close = document.getElementById('status_modal_close');
 
-    //{# initial value of range slider #}
+    //initial value of range slider
     //num_range_text.value = '5';
 
+    // retain value of range slider per session, so it won't change across page refreshes
     if(sessionStorage.num_range_text){
         num_range_text.value = sessionStorage.num_range_text;
     }
@@ -100,13 +101,13 @@
         num_range_text.value = sessionStorage.num_range_text;
     }
 
-    {# initial points for correct and wrong guess#}
+   //initial points for correct and wrong guess
    positive_points.innerHTML = Number(num_range_text.value) ;
    negative_points.innerHTML = parseInt(Number(num_range_text.value)/5);
    current_points_text.innerHTML = 0;
 
-    {# dynamically change value, as user slides the range-slider #}
-    {# Ref: https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_oninput #}
+    //dynamically change value, as user slides the range-slider
+    //Ref: https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_oninput
     num_range_select.addEventListener("input", update_num_range_text);
 
       function update_num_range_text() {
@@ -119,7 +120,7 @@
 
       }
 
-      {# Ref: https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_win_sessionstorage2 #}
+      //Ref: https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_win_sessionstorage2
       function update_attempt_count(result) {
           var attempt_count = document.getElementById('attempt_count');
           if(result == 'SUCCESS' ) {
@@ -149,12 +150,13 @@
       attempt_count.innerHTML = attempt_count.innerHTML + sessionStorage.attempt_count_html;
       }
 
+      // display Green/Red status modal
       if ( '{{ guess_result }}' != 'NIL') {
       status_modal.style.display='block'
       update_attempt_count('{{ guess_result }}')
       }
 
-      {# modal close button #}
+      //modal close button
       status_modal_close.addEventListener("click", function() {status_modal.style.display='none';});
 
 </script>
