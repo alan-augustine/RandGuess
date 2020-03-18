@@ -1,6 +1,6 @@
 # RandGuess
 
-A simple web based random number guessing game using:
+A simple web based number guessing game using:
 * [Flask ](https://palletsprojects.com/p/flask/)
 * [W3.CSS](https://www.w3schools.com/w3css/)
 * Javascript
