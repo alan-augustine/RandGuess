@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}"> -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='w3.css') }}">
     <title>RandGuess</title>
 <!--  # url_for has two forms:
@@ -10,9 +9,11 @@
       # 2.url_for('directory_name_relative_to_app.py', filename='base.html') -->
     <link rel="icon" href="{{ url_for('static', filename='RandGuessIcon.png') }}">
 </head>
-<!-- TODO: add background image -->
+
+{# Browser tab icon #}
 <body style="background-image: url('{{ url_for('static', filename='bgImage.png') }}');background-repeat:no-repeat;background-size:cover">
     {% block content %}
+        {# if this template is imported in other templates, the content in importing templates should go here#}
     {% endblock %}
 </body>
 </html>

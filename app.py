@@ -32,7 +32,7 @@ def index():
         user_guess = form.user_guess.data
         num_range = form.num_range_select.data
         app.logger.info("num_range = " + str(num_range))
-        system_guess = randrange(num_range)
+        system_guess = randrange(num_range) + 1
         app.logger.info("System Guess = " + str(system_guess))
         if user_guess == system_guess:
             guess_result = 'SUCCESS'
