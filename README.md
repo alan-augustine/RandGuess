@@ -6,6 +6,7 @@ A simple web based random number guessing game using:
 * Javascript
 
 User need to correctly guess the number between 3 and 25.
+<br>
 User can adjust the number range and points for correct guess and negative points for incorrect guess changes accordingly.
 <br>
 ![](RandGuess.gif)
@@ -13,5 +14,7 @@ User can adjust the number range and points for correct guess and negative point
 <br>
 
 Python Flask is used mainly to generate ramdom number and to verify user guess.
+<br>
 Remaining features like points and attempt history is computed at client side via Javascript.
+<br>
 So, the points and attempt history are maintained per user session.
